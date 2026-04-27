@@ -417,4 +417,32 @@ export const LEVELS = [
             { color: "red", pos: [4, 0] },
         ]
     },
+    {
+        name: "Level 29",
+        size: 5,
+        dots: [
+            { color: "yellow", pos: [0, 4] },
+            { color: "yellow", pos: [1, 3] },
+            { color: "green", pos: [0, 3] },
+            { color: "green", pos: [3, 4] },
+            { color: "blue", pos: [1, 1] },
+            { color: "blue", pos: [2, 4] },
+            { color: "red", pos: [2, 1] },
+            { color: "red", pos: [3, 3] },
+        ]
+    },
+    {
+        name: "Level 30",
+        size: 5,
+        dots: [
+            { color: "yellow", pos: [1, 0] },
+            { color: "yellow", pos: [1, 4] },
+            { color: "blue", pos: [2, 0] },
+            { color: "blue", pos: [3, 4] },
+            { color: "red", pos: [3, 1] },
+            { color: "red", pos: [2, 4] },
+            { color: "green", pos: [2, 2] },
+            { color: "green", pos: [3, 3] },
+        ]
+    },
 ];
