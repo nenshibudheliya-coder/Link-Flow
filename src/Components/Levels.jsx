@@ -8,16 +8,26 @@ import '../css/Home.css';
 export default function Levels({ onSelectLevel, onBack, unlockedLevel }) {
     const [isLaptop, setIsLaptop] = useState(window.innerWidth >= 1024);
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 600);
+    const [isLandscape, setIsLandscape] = useState(
+        window.innerWidth <= 900 && window.innerWidth > window.innerHeight
+    );
     const [currentPage, setCurrentPage] = useState(0);
-    const levelsPerPage = isMobile ? 30 : 12; // 30 levels for mobile (5x6), 12 for tablet+laptop (4x3)
+    const levelsPerPage = isMobile ? 30 : 12;
 
     useEffect(() => {
         const handleResize = () => {
-            setIsLaptop(window.innerWidth >= 1024);
-            setIsMobile(window.innerWidth <= 600);
+            const w = window.innerWidth;
+            const h = window.innerHeight;
+            setIsLaptop(w >= 1024);
+            setIsMobile(w <= 600);
+            setIsLandscape(w <= 900 && w > h);
         };
         window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
+        window.addEventListener('orientationchange', handleResize);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+            window.removeEventListener('orientationchange', handleResize);
+        };
     }, []);
 
     const startIndex = currentPage * levelsPerPage;
@@ -37,6 +47,41 @@ export default function Levels({ onSelectLevel, onBack, unlockedLevel }) {
             <CircuitBackground />
             <div className="star-pattern-bg" style={{ opacity: 0.05 }} />
 
+            {/* Landscape Orientation Error Overlay - Mobile Only */}
+            {isLandscape && (
+                <div style={{
+                    position: 'fixed', inset: 0, zIndex: 9999,
+                    background: 'rgba(2, 8, 18, 0.97)',
+                    display: 'flex', flexDirection: 'column',
+                    alignItems: 'center', justifyContent: 'center',
+                    gap: '20px', padding: '30px',
+                }}>
+                    <div style={{ fontSize: '70px', animation: 'spin 2s linear infinite' }}>📱</div>
+                    <div style={{
+                        fontSize: '22px', fontWeight: 900, color: '#00b4ff',
+                        fontFamily: "'Share Tech Mono', monospace",
+                        textShadow: '0 0 15px rgba(0,180,255,0.8)',
+                        letterSpacing: '3px', textAlign: 'center',
+                        textTransform: 'uppercase',
+                    }}>
+                        {/* Rotate Device */}
+                    </div>
+                    <div style={{
+                        fontSize: '14px', color: 'rgba(0,180,255,0.6)',
+                        fontFamily: "'Share Tech Mono', monospace",
+                        textAlign: 'center', letterSpacing: '1px',
+                        lineHeight: 1.8,
+                    }}>
+                        Please rotate your device<br />to portrait mode to continue.
+                    </div>
+                    <div style={{
+                        width: 60, height: 3,
+                        background: 'linear-gradient(90deg, transparent, #00b4ff, transparent)',
+                        marginTop: '10px',
+                    }} />
+                </div>
+            )}
+
             {/* Scanline overlay from Home page */}
             <div style={{
                 position: "fixed", inset: 0, zIndex: 1, pointerEvents: "none",
@@ -46,7 +91,7 @@ export default function Levels({ onSelectLevel, onBack, unlockedLevel }) {
             {/* Corner Frames from Home page */}
             <div className="corner-frame top-left" style={{ zIndex: 1 }} />
             <div className="corner-frame bottom-right" style={{ bottom: 40, right: 40, top: 'auto', left: 'auto', transform: 'rotate(180deg)', zIndex: 1 }} />
-            
+
             <h1 className="levels-title-image">SELECT LEVEL</h1>
 
             <div className={`levels-grid-image ${isLaptop ? 'laptop' : 'tablet'}`}>

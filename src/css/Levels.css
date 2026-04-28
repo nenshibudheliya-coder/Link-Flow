@@ -1,4 +1,13 @@
 /* IMAGE THEME STYLES - Matches the user provided screenshot */
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(-90deg); }
+    50% { transform: rotate(-90deg); }
+    75% { transform: rotate(0deg); }
+    100% { transform: rotate(0deg); }
+}
+
 .levels-container.image-theme {
     background: #020812; /* Deep dark blue-black */
     min-height: 100vh;
