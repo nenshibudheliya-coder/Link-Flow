@@ -1,8 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Exo+2:wght@700;900&display=swap');
 
 @keyframes titleGlow { 
-    0%, 100% { text-shadow: 0 0 20px #00b4ff, 0 0 40px #00b4ff44; } 
-    50% { text-shadow: 0 0 30px #00e676, 0 0 60px #00e67644, 0 0 80px #00e67622; } 
+    0%, 100% { 
+        text-shadow: 0 0 15px rgba(0, 180, 255, 0.6), 0 0 30px rgba(0, 180, 255, 0.4);
+        color: #00b4ff;
+    } 
+    50% { 
+        text-shadow: 0 0 20px rgba(0, 230, 118, 0.6), 0 0 40px rgba(0, 230, 118, 0.4);
+        color: #00e676;
+    } 
+}
+
+@keyframes textScan {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+@keyframes titleFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
 }
 
 @keyframes scanline { 
@@ -10,31 +26,136 @@
     100% { transform: translateY(100vh); } 
 }
 
+.frame-decor {
+    position: absolute;
+    border: 1px solid rgba(0, 180, 255, 0.1);
+    animation: pulseBorder 4s infinite;
+    pointer-events: none; /* Prevent blocking clicks */
+}
+
+/* Responsive Title Styles */
+.title-container {
+    position: relative;
+    animation: titleFloat 6s ease-in-out infinite;
+}
+
+.main-title {
+    font-family: 'Exo 2', sans-serif;
+    font-weight: 900;
+    line-height: 1;
+    text-transform: uppercase;
+    position: relative;
+    background: linear-gradient(90deg, #00b4ff, #00e676, #00b4ff);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: textScan 4s linear infinite, titleGlow 4s ease-in-out infinite;
+    z-index: 2;
+}
+
+.glitch-title {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    font-family: 'Exo 2', sans-serif;
+    font-weight: 900;
+    color: rgba(255, 59, 92, 0.3);
+    z-index: 1;
+    opacity: 0.5;
+    animation: glitch 2s infinite linear alternate-reverse;
+    pointer-events: none;
+}
+
+.home-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: max(40px, 8vh);
+    align-items: center;
+    width: 90%;
+    max-width: 1200px;
+    transition: transform 0.5s ease;
+}
+
+/* Responsive Font Sizes */
+@media (min-width: 1024px) { /* Desktop */
+    .main-title, .glitch-title {
+        font-size: 96px;
+        letter-spacing: 20px;
+    }
+}
+
+@media (max-width: 1023px) and (min-width: 768px) { /* Tablet */
+    .main-title, .glitch-title {
+        font-size: 72px;
+        letter-spacing: 14px;
+    }
+}
+
+@media (max-width: 767px) { /* Mobile */
+    .main-title, .glitch-title {
+        font-size: 48px;
+        letter-spacing: 8px;
+    }
+    .corner-frame {
+        width: 150px;
+        height: 150px;
+    }
+    .play-btn {
+        padding: 14px 40px;
+        font-size: 14px;
+        letter-spacing: 4px;
+        border-radius: 30px;
+    }
+    .home-content {
+        transform: translateY(0); 
+        gap: 60px; /* Minimize space between title and button on mobile */
+    }
+}
+
 .play-btn {
-    background: rgba(0,180,255,0.1);
+    background: rgba(0, 180, 255, 0.05);
     border: 2px solid #00b4ff;
     color: #00b4ff;
-    padding: 16px 48px;
+    padding: 20px 60px;
     font-size: 24px;
     font-weight: 900;
     font-family: 'Exo 2', sans-serif;
-    letter-spacing: 6px;
-    border-radius: 8px;
+    letter-spacing: 8px;
     cursor: pointer;
-    transition: all 0.3s;
-    backdrop-filter: blur(8px);
-    box-shadow: 0 0 20px rgba(0,180,255,0.2), inset 0 0 10px rgba(0,180,255,0.1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 0 20px rgba(0, 180, 255, 0.2);
     text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+    border-radius: 50px;
+    text-shadow: 0 0 10px rgba(0, 180, 255, 0.8);
 }
 
 .play-btn:hover {
-    background: rgba(0,230,118,0.15);
-    border-color: #00e676;
-    color: #00e676;
-    box-shadow: 0 0 30px rgba(0,230,118,0.4), inset 0 0 20px rgba(0,230,118,0.2);
-    transform: translateY(-2px) scale(1.05);
+    background: rgba(0, 180, 255, 0.2);
+    color: #fff;
+    box-shadow: 0 0 40px rgba(0, 180, 255, 0.4), inset 0 0 20px rgba(0, 180, 255, 0.2);
+    transform: scale(1.05);
+    letter-spacing: 12px;
 }
 
-.play-btn:active {
-    transform: translateY(2px) scale(0.95);
+.play-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: 0.5s;
+}
+
+.play-btn:hover::before {
+    left: 100%;
 }

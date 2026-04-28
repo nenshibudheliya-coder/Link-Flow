@@ -443,7 +443,6 @@ export default function LinkGame({ onHome, initialLevel = 0, onWin }) {
                     redraw();
                     if (checkWin(np, level.dots, SIZE_r.current)) {
                         g.won = true; setWon(true);
-                        if (onWin) onWin(levelIdx);
                         setTimeout(() => setCelebration(true), 300);
                     }
                     return;
@@ -469,7 +468,6 @@ export default function LinkGame({ onHome, initialLevel = 0, onWin }) {
 
         if (checkWin(np, level.dots, SIZE_r.current)) {
             g.won = true; setWon(true);
-            if (onWin) onWin(levelIdx);
             setTimeout(() => setCelebration(true), 300);
         }
     }, [level, levelIdx, onWin, redraw]);
@@ -672,6 +670,7 @@ export default function LinkGame({ onHome, initialLevel = 0, onWin }) {
                                     ↺ Restart
                                 </button>
                                 <button onClick={() => {
+                                    if (onWin) onWin(levelIdx); // This unlocks the next level ONLY when clicking this button
                                     setCelebration(false);
                                     setTransitionClass("level-flip-exit");
                                     setTimeout(() => {

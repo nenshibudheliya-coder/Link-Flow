@@ -1,204 +1,279 @@
-.levels-container {
+/* IMAGE THEME STYLES - Matches the user provided screenshot */
+.levels-container.image-theme {
+    background: #020812; /* Deep dark blue-black */
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 0px 10px 80px;
-    font-family: 'Share Tech Mono', 'Courier New', monospace;
-    user-select: none;
+    padding: 20px;
+    font-family: 'Share Tech Mono', monospace; /* Tech font for consistency */
+    color: #00b4ff; /* Neon blue text */
     position: relative;
-    overflow-y: auto;
-    color: #fff;
-    background: #020812;
+    overflow: hidden;
 }
 
-.levels-title {
-    font-family: 'Exo 2', sans-serif;
-    font-size: 42px;
-    font-weight: 900;
-    letter-spacing: 8px;
+.star-pattern-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.05;
+    pointer-events: none;
+    background-image: 
+        radial-gradient(circle at 50% 50%, #00b4ff 1px, transparent 1px),
+        radial-gradient(circle at 0% 0%, #00b4ff 1px, transparent 1px);
+    background-size: 50px 50px;
+    z-index: 1;
+}
+
+.back-btn-image {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    background: transparent;
+    border: 1px solid rgba(0, 180, 255, 0.4);
     color: #00b4ff;
-    text-shadow: 0 0 20px #00b4ff, 0 0 40px #00b4ff44;
+    padding: 8px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 14px;
+    transition: all 0.3s;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.back-btn-image:hover {
+    background: rgba(0, 180, 255, 0.1);
+    border-color: #00b4ff;
+    box-shadow: 0 0 10px rgba(0, 180, 255, 0.2);
+}
+
+.levels-title-image {
+    font-size: 48px;
+    font-weight: 900;
+    color: #00b4ff;
+    font-family: 'Share Tech Mono', monospace;
+    text-shadow: 0 0 15px rgba(0, 180, 255, 0.8), 0 0 30px rgba(0, 180, 255, 0.4);
+    letter-spacing: 10px;
     margin-bottom: 40px;
     text-align: center;
-    position: relative;
     z-index: 2;
+    text-transform: uppercase;
 }
 
-.levels-grid {
+.levels-grid-image {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    width: 100%;
-    max-width: 500px;
-    margin: 0 auto;
-    position: relative;
+    grid-template-columns: repeat(4, 1fr); /* 4 Columns as per image */
+    gap: 20px;
     z-index: 2;
+    margin-bottom: 50px;
+    max-width: 800px;
 }
 
-.level-card {
-    background: rgba(0, 180, 255, 0.05);
-    border: 2px solid rgba(0, 180, 255, 0.3);
-    width: 55px;
-    padding: 8px 2px;
-    border-radius: 4px;
+.level-card-image {
+    width: 100px;
+    height: 100px;
+    background: rgba(2, 8, 18, 0.8); /* Matches CircuitBackground color */
+    border: 1.5px solid rgba(0, 180, 255, 0.3); /* Neon blue border */
+    border-radius: 12px;
+    position: relative;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    backdrop-filter: blur(8px);
-    box-shadow: 0 0 15px rgba(0, 180, 255, 0.1), inset 0 0 10px rgba(0, 180, 255, 0.05);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), inset 0 0 10px rgba(0, 180, 255, 0.05);
 }
 
-.level-card.locked {
-    background: rgba(255, 255, 255, 0.02);
-    border-color: rgba(255, 255, 255, 0.1);
+.level-card-image:hover {
+    border-color: #00b4ff;
+    background: rgba(0, 180, 255, 0.1);
+    box-shadow: 0 0 25px rgba(0, 180, 255, 0.4);
+    transform: translateY(-5px);
+}
+
+.level-card-image.locked {
+    opacity: 0.2;
     cursor: not-allowed;
     filter: grayscale(1);
-    opacity: 0.6;
 }
 
-.level-card.locked:hover {
-    transform: none;
-    box-shadow: none;
-    border-color: rgba(255, 255, 255, 0.1);
-}
-
-.level-card.locked .level-number {
-    color: #555;
-    text-shadow: none;
-    font-size: 24px;
-}
-
-.level-card:hover {
-    background: rgba(0, 230, 118, 0.15);
-    border-color: #00e676;
-    transform: translateY(-5px) scale(1.05);
-    box-shadow: 0 0 30px rgba(0, 230, 118, 0.3), inset 0 0 20px rgba(0, 230, 118, 0.1);
-}
-
-.level-number {
-    font-size: 18px;
-    font-weight: 700;
-    font-family: 'Exo 2', sans-serif;
-    color: #00b4ff;
-    margin-bottom: 8px;
-    text-shadow: 0 0 10px #00b4ff88;
-    transition: color 0.3s;
-}
-
-.level-card:hover .level-number {
-    color: #00e676;
-    text-shadow: 0 0 15px #00e67688;
-}
-
-.level-size {
-    font-size: 12px;
-    color: #2a6a7a;
-    letter-spacing: 2px;
-    transition: color 0.3s;
-}
-
-.level-card:hover .level-size {
-    color: #2a8a6a;
-}
-
-.back-btn {
+.card-dot {
     position: absolute;
-    top: 24px;
-    left: 24px;
-    background: rgba(255, 59, 92, 0.1);
-    border: 1px solid rgba(255, 59, 92, 0.3);
-    color: #ff3b5c;
-    padding: 10px 20px;
-    border-radius: 6px;
-    cursor: pointer;
+    top: 8px;
+    right: 8px;
+    width: 6px;
+    height: 6px;
+    background: #00b4ff;
+    border-radius: 50%;
+    opacity: 1;
+    box-shadow: 0 0 8px #00b4ff;
+}
+
+.level-number-image {
+    font-size: 32px;
+    font-weight: 900;
+    color: #00b4ff;
     font-family: 'Share Tech Mono', monospace;
-    font-weight: 700;
+    text-shadow: 0 0 10px rgba(0, 180, 255, 0.8), 0 0 20px rgba(0, 180, 255, 0.4);
+}
+
+.pagination-image-controls {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    z-index: 2;
+}
+
+.nav-btn-image {
+    background: transparent;
+    border: 2px solid #00b4ff; /* Neon blue border */
+    color: #00b4ff; /* Neon blue text */
+    padding: 10px 40px;
+    border-radius: 40px; /* Pill shape */
+    font-family: 'Share Tech Mono', monospace; /* Tech font */
+    font-size: 20px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 140px;
+    justify-content: center;
+    text-shadow: 0 0 10px rgba(0, 180, 255, 0.8), 0 0 20px rgba(0, 180, 255, 0.4);
     letter-spacing: 2px;
-    transition: all 0.2s;
-    backdrop-filter: blur(4px);
-    z-index: 10;
+    box-shadow: inset 0 0 10px rgba(0, 180, 255, 0.2);
 }
 
-.back-btn:hover {
-    background: rgba(255, 59, 92, 0.2);
-    border-color: #ff3b5c;
-    box-shadow: 0 0 20px rgba(255, 59, 92, 0.3);
-    transform: translateX(-3px);
+.nav-btn-image:hover:not(.disabled) {
+    background: rgba(0, 180, 255, 0.1);
+    box-shadow: 0 0 20px rgba(0, 180, 255, 0.5), inset 0 0 15px rgba(0, 180, 255, 0.3);
+    transform: scale(1.05);
 }
 
-/* RESPONSIVENESS */
-@media (max-width: 768px) {
-    .levels-title {
-        margin-top: -80px;
-        margin-bottom: 50px;
-    }
-    .levels-grid {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 15px;
-        max-width: 600px;
-    }
-    .level-card {
-        padding: 20px 10px;
-    }
+.nav-btn-image.disabled {
+    opacity: 0.2;
+    cursor: not-allowed;
+    border-color: rgba(0, 180, 255, 0.3);
+    color: rgba(0, 180, 255, 0.3);
+    text-shadow: none;
 }
 
-@media (max-width: 600px) {
-    .levels-container {
-        padding: 20px 15px;
+.page-indicator {
+    font-size: 24px;
+    font-weight: 900;
+    color: #00b4ff;
+    font-family: 'Share Tech Mono', monospace;
+    text-shadow: 0 0 10px rgba(0, 180, 255, 0.5);
+}
+
+.arrow-left, .arrow-right {
+    font-size: 12px;
+}
+
+/* Tablet adjustments - same style as laptop view */
+@media (min-width: 601px) and (max-width: 1024px) {
+    .levels-container.image-theme {
         justify-content: center;
+        padding: 30px 20px;
     }
-    .levels-title {
-        font-size: 28px;
-        letter-spacing: 4px;
-        margin-bottom: 40px;
-        margin-top: -56px;
+    .levels-title-image {
+        font-size: 42px;
+        letter-spacing: 10px;
+        margin-bottom: 35px;
     }
-    .levels-grid {
+    .levels-grid-image {
         grid-template-columns: repeat(4, 1fr);
-        gap: 25px;
-        width: 100%;
-        max-width: 380px;
-        margin: 0 auto;
-        justify-items: center;
+        gap: 20px;
+        max-width: 550px;
+        width: 90%;
+        margin: 0 auto 50px;
     }
-    .level-card {
+    .level-card-image {
+        width: 100px;
+        height: 100px;
+        border-radius: 12px;
+        border: 1.5px solid rgba(0, 180, 255, 0.3);
+        background: rgba(2, 8, 18, 0.8);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), inset 0 0 10px rgba(0, 180, 255, 0.05);
+    }
+    .level-card-image:hover {
+        border-color: #00b4ff;
+        background: rgba(0, 180, 255, 0.1);
+        box-shadow: 0 0 25px rgba(0, 180, 255, 0.4);
+        transform: translateY(-5px);
+    }
+    .level-number-image {
+        font-size: 32px;
+        font-weight: 900;
+        text-shadow: 0 0 10px rgba(0, 180, 255, 0.8), 0 0 20px rgba(0, 180, 255, 0.4);
+    }
+    .pagination-image-controls {
+        justify-content: center;
+        gap: 25px;
+    }
+    .nav-btn-image {
+        padding: 10px 40px;
+        font-size: 20px;
+        min-width: 140px;
+        border-radius: 40px;
+    }
+    .page-indicator {
+        font-size: 24px;
+    }
+}
+
+/* Mobile adjustments (5x6 grid for 30 levels) */
+@media (max-width: 600px) {
+    .levels-title-image {
+        font-size: 28px;
+        letter-spacing: 5px;
+        margin-bottom: 30px;
+    }
+    .levels-grid-image {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 8px;
+        margin-bottom: 220px;
+        width: 95%;
+        max-width: 400px;
+    }
+    .level-card-image {
         width: 100%;
-        max-width: 75px;
-        flex: none;
-        padding: 15px 5px;
-        min-width: 0;
+        aspect-ratio: 1; /* Keep them square */
+        height: auto;
         border-radius: 8px;
     }
-    .level-number {
-        font-size: 20px;
-        margin-bottom: 0;
+    .level-number-image {
+        font-size: 18px;
+    }
+    .nav-btn-image {
+        padding: 8px 15px;
+        font-size: 14px;
+        min-width: 90px;
+        gap: 6px;
+    }
+    .page-indicator {
+        font-size: 16px;
+    }
+    .back-btn-image {
+        top: 15px;
+        left: 15px;
+        padding: 6px 12px;
+        font-size: 12px;
     }
 }
 
 @media (max-width: 400px) {
-    .levels-container {
-        padding: 15px 10px;
+    .levels-grid-image {
+        gap: 6px;
     }
-    .levels-title {
-        font-size: 24px;
-        letter-spacing: 3px;
-        margin-bottom: 30px;
-        margin-top: -100px;
-    }
-    .levels-grid {
-        gap: 18px;
-        max-width: 320px;
-    }
-    .level-card {
-        padding: 12px 4px;
-        max-width: 65px;
-    }
-    .level-number {
-        font-size: 18px;
+    .level-number-image {
+        font-size: 16px;
     }
 }
